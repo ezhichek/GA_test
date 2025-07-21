@@ -17,8 +17,8 @@ jobs:
       - name: Simulate job1 PASS
         run: echo "✅ job1"
 
-  build:
-    needs: [ job1, job2 ]
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "Build step"
+build:
+  needs: [ job1, job2 ]
+  runs-on: ubuntu-latest
+  steps:
+    - run: echo "Build step"
