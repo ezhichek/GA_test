@@ -1,0 +1,34 @@
+name: branch-flow
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: job1 FAIL
+        run: |
+          echo "Simulating job1 fail"
+          exit 1
+
+  job2:
+    needs: job1
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "job2 should be skipped"
+
+  build:
+    needs: job2
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Check if job2 succeeded
+        run: |
+          echo "Checking job2 result: ${{ needs.job2.result }}"
+          if [[ "${{ needs.job2.result }}" != "success" ]]; then
+            echo "❌ job2 failed or was skipped — build fails"
+            exit 1
+          fi
+          echo "✅ build success"
