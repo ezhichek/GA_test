@@ -8,28 +8,26 @@ jobs:
   job1:
     runs-on: ubuntu-latest
     steps:
-      - name: Fail on purpose
-        run: exit 1
+      - run: echo "job1 success"
 
   job2:
     needs: job1
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Job2"
+      - run: echo "job2 success"
 
   build:
     needs: job2
     runs-on: ubuntu-latest
     if: always()
     steps:
-      - name: Validate dependency result
+      - name: Validate job2 status
         run: |
-          echo "Build running. job2 result: ${{ needs.job2.result }}"
           if [[ "${{ needs.job2.result }}" != "success" ]]; then
-            echo "Blocking build: job2 did not succeed."
+            echo "job2 did not succeed — failing build"
             exit 1
-          else
-            echo "All good."
           fi
+          echo "build success"
+
 
 
