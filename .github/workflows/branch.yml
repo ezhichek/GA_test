@@ -1,0 +1,35 @@
+name: branch-flow
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo from job1
+        run: echo "Hello from job1 ✅"
+
+  job2:
+    needs: job1
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo from job2
+        run: echo "Hello from job2 ✅"
+
+  build:
+    needs: job2
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo from build
+        run: echo "✅ Final build step"
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run tests
+        run: echo "🧪 Running tests..."
+
