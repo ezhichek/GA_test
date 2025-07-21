@@ -10,8 +10,8 @@ jobs:
   job1:
     runs-on: ubuntu-latest
     steps:
-      - name: Echo from job1
-        run: echo "Hello from job1 ✅"
+      - name: Simulate fail
+        run: exit 1
 
   job2:
     needs: job1
