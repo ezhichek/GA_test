@@ -26,8 +26,8 @@ jobs:
         run: |
           echo "Checking job2 result: ${{ needs.job2.result }}"
           if [[ "${{ needs.job2.result }}" != "success" ]]; then
-            echo "❌ job2 failed or skipped — build fails"
+            echo "job2 failed or skipped — build fails"
             exit 1
           fi
-          echo "✅ build success"
+          echo "build success"
 

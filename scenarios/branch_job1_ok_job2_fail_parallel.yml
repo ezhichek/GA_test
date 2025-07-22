@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Simulate job1 PASS
-        run: echo "✅ job1"
+        run: echo "job1"
 
   job2:
     runs-on: ubuntu-latest

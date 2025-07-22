@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Simulate job1 PASS
-        run: echo "✅ job1"
+        run: echo "job1"
 
   build:
     needs: [ job1, job2 ]
