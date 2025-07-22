@@ -1,0 +1,33 @@
+name: branch-flow
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "job1 success"
+
+  job2:
+    needs: job1
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "job2 success"
+
+  build:
+    needs: job2
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Validate job2 status
+        run: |
+          if [[ "${{ needs.job2.result }}" != "success" ]]; then
+            echo "job2 did not succeed — failing build"
+            exit 1
+          fi
+          echo "build success"
+
+
+

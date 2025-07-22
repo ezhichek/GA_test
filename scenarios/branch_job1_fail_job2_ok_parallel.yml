@@ -1,0 +1,24 @@
+name: branch-flow
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Simulate FAIL
+        run: exit 1
+
+  job2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Simulate job1 PASS
+        run: echo "job1"
+
+  build:
+    needs: [ job1, job2 ]
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Build step"
