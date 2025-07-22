@@ -14,11 +14,16 @@ jobs:
   job2:
     runs-on: ubuntu-latest
     steps:
-      - name: Simulate job1 PASS
-        run: echo "✅ job1"
+      - name: Simulate FAIL
+        run: exit 1
 
-  build:
-    needs: [ job1, job2 ]
+  status-check:
+    if: always()
+    needs:
+      - job1
+      - job2
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Build step"
+      - uses: re-actors/alls-green@release/v1
+        with:
+          jobs: ${{ toJSON(needs) }}
